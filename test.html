@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .search-btn, .close-btn, .aaa {
+            width: 40px;
+            height: 40px;
+            font-size: 25px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            transition: all 0.25s ease;
+        }
+
+        .close-btn {
+            z-index: -1;
+            background-color: white;
+        }
+
+        .search-box {
+            width: 0;
+            height: 40px;
+            padding: 0 15px;
+            border-radius: 25px;
+            outline: none;
+            border: none;
+            transition: width 0.25s ease;
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .active .search-box {
+            width: 250px;
+        }
+
+        .active .search-btn {
+            transform: translate(210px, 2px) scale(0.8);
+            background-color: transparent;
+        }
+
+        .active .close-btn {
+            z-index: 0;
+            transform: translate(250px, 2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+      
+    </style>
+</head>
+<body>
+    <div class="search">
+        <form id="searchForm" action="process.php" method="POST">
+            <input type="search" name="searchTerm" placeholder="Enter search term" class="search-box">
+            <button type="submit" class="aaa hidden"><i class="fa-solid fa-phone"></i></button>
+        </form>
+        <button class="search-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <script>
+        const searchBox = document.querySelector('.search-box');
+        const searchBtn = document.querySelector('.search-btn');
+        const search = document.querySelector('.search');
+        const closeBtn = document.querySelector('.close-btn');
+        const aaaBtn = document.querySelector('.aaa');
+        const searchForm = document.getElementById('searchForm');
+
+        searchBtn.addEventListener('click', function() {
+            if (search.classList.contains('active')) {
+                // Submit the form if search is active
+                searchForm.submit(); 
+            } else {
+                // Activate the search box
+                search.classList.add('active');
+                searchBox.focus();
+                searchBtn.classList.add('hidden'); // Hide the search button
+                aaaBtn.classList.remove('hidden'); // Show the submit button
+            }
+        });
+
+        closeBtn.addEventListener('click', function() {
+            // Deactivate the search box
+            search.classList.remove('active');
+            searchBtn.classList.remove('hidden'); // Show the search button
+            aaaBtn.classList.add('hidden'); // Hide the submit button
+        });
+
+        // Optional: You can handle form submission here or in the form itself
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            // Uncomment the line below if you want to manually submit the form
+            // searchForm.submit();
+        });
+    </script>
+</body>
+</html>
